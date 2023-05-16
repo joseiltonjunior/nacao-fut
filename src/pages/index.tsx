@@ -10,6 +10,10 @@ import { useState } from 'react'
 import Image from 'next/image'
 
 import bkgd from '@/assets/home-bkgd-removebg-preview.png'
+import { useDispatch } from 'react-redux'
+
+import { setUser } from '@/storage/modules/user/action'
+import { useRouter } from 'next/router'
 
 interface authProps {
   clientSecretKey: string
@@ -30,12 +34,19 @@ export default function Auth() {
 
   const [isLoading, setIsLoading] = useState(false)
   const { showToast } = useToast()
+  const dispatch = useDispatch()
+  const router = useRouter()
 
   async function handleStatusUser({ clientSecretKey }: authProps) {
     setIsLoading(true)
     await axios
       .get(`/api/auth?key=${clientSecretKey}`)
-      .then((result) => console.log(result.data))
+      .then((result) => {
+        dispatch(
+          setUser({ user: { ...result.data, secretkey: clientSecretKey } }),
+        )
+        router.push('/home')
+      })
       .catch((err) => {
         const { message } = err.response.data
 
