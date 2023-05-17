@@ -10,14 +10,10 @@ import { useState } from 'react'
 import Image from 'next/image'
 
 import bkgd from '@/assets/home-bkgd-removebg-preview.png'
-// import { useDispatch } from 'react-redux'
 
-// import { setUser } from '@/storage/modules/user/action'
 import { useRouter } from 'next/router'
-
-interface authProps {
-  clientSecretKey: string
-}
+import Link from 'next/link'
+import { authProps } from '@/types/auth'
 
 const schema = z.object({
   clientSecretKey: z.string().min(25, { message: 'minimum of 25 characters' }),
@@ -34,7 +30,7 @@ export default function Auth() {
 
   const [isLoading, setIsLoading] = useState(false)
   const { showToast } = useToast()
-  // const dispatch = useDispatch()
+
   const router = useRouter()
 
   async function handleStatusUser({ clientSecretKey }: authProps) {
@@ -42,21 +38,29 @@ export default function Auth() {
     await axios
       .get(`/api/football?type=status&key=${clientSecretKey}`)
       .then((result) => {
-        const { errors } = result.data
+        const { errors, response } = result.data
 
         if (
           errors.token &&
           errors.token.includes('Error/Missing application key')
         ) {
           showToast('Invalid application key', {
-            type: 'warning',
+            type: 'error',
             theme: 'colored',
           })
 
           return
         }
 
-        // dispatch(setUser({ user: { ...response, secretkey: clientSecretKey } }))
+        if (response.requests.current >= response.requests.limit_day) {
+          showToast('Daily limit exceeded, upgrade your account', {
+            type: 'error',
+            theme: 'colored',
+          })
+
+          return
+        }
+
         router.push(`/home/${clientSecretKey}`)
       })
       .catch(() => {
@@ -82,6 +86,13 @@ export default function Auth() {
           <Button type="submit" isLoading={isLoading}>
             Enter
           </Button>
+
+          <Link
+            href={'https://dashboard.api-football.com/login'}
+            target="_blank"
+          >
+            Create new account
+          </Link>
         </form>
       </Main>
       <aside>

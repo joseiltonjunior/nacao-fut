@@ -1,11 +1,8 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React from 'react'
 import ReactLoading from 'react-loading'
 
 import { Container } from './styles'
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  isLoading?: boolean
-}
+import { ButtonProps } from '@/types/button'
 
 export function Button({ children, isLoading, ...rest }: ButtonProps) {
   return (

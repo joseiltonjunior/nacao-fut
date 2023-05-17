@@ -53,6 +53,18 @@ export const Main = styled('main', {
     fontSize: '$xl',
   },
 
+  a: {
+    textAlign: 'center',
+    textDecoration: 'none',
+    color: '$orange500',
+    fontWeight: 'bold',
+    fontSize: '$md',
+
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
+
   form: {
     marginTop: '2rem',
     maxWidth: 600,

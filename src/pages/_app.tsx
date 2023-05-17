@@ -2,9 +2,6 @@ import { globalStyles } from '@/styles/global'
 import type { AppProps } from 'next/app'
 import { SkeletonTheme } from 'react-loading-skeleton'
 import { ToastContainer } from 'react-toastify'
-import { PersistGate } from 'redux-persist/integration/react'
-import { store, persistor } from '../storage'
-import { Provider } from 'react-redux'
 
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -21,14 +18,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <SkeletonTheme baseColor={'#202024'} highlightColor={'#121214'}>
-            <ToastContainer />
-            <Component {...pageProps} />
-          </SkeletonTheme>
-        </PersistGate>
-      </Provider>
+
+      <SkeletonTheme baseColor={'#202024'} highlightColor={'#121214'}>
+        <ToastContainer />
+        <Component {...pageProps} />
+      </SkeletonTheme>
     </>
   )
 }
