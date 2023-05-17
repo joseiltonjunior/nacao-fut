@@ -3,16 +3,16 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useToast } from '@/hooks/useToast'
-import { Container } from '@/styles/pages/auth'
+import { Container, Main } from '@/styles/pages/auth'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
 import { useState } from 'react'
 import Image from 'next/image'
 
 import bkgd from '@/assets/home-bkgd-removebg-preview.png'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 
-import { setUser } from '@/storage/modules/user/action'
+// import { setUser } from '@/storage/modules/user/action'
 import { useRouter } from 'next/router'
 
 interface authProps {
@@ -34,23 +34,33 @@ export default function Auth() {
 
   const [isLoading, setIsLoading] = useState(false)
   const { showToast } = useToast()
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const router = useRouter()
 
   async function handleStatusUser({ clientSecretKey }: authProps) {
     setIsLoading(true)
     await axios
-      .get(`/api/auth?key=${clientSecretKey}`)
+      .get(`/api/football?type=status&key=${clientSecretKey}`)
       .then((result) => {
-        dispatch(
-          setUser({ user: { ...result.data, secretkey: clientSecretKey } }),
-        )
-        router.push('/home')
-      })
-      .catch((err) => {
-        const { message } = err.response.data
+        const { errors } = result.data
 
-        showToast(message, {
+        if (
+          errors.token &&
+          errors.token.includes('Error/Missing application key')
+        ) {
+          showToast('Invalid application key', {
+            type: 'warning',
+            theme: 'colored',
+          })
+
+          return
+        }
+
+        // dispatch(setUser({ user: { ...response, secretkey: clientSecretKey } }))
+        router.push(`/home/${clientSecretKey}`)
+      })
+      .catch(() => {
+        showToast('Unavailable service', {
           type: 'error',
           theme: 'colored',
         })
@@ -60,7 +70,7 @@ export default function Auth() {
 
   return (
     <Container>
-      <main>
+      <Main>
         <h3>Hello, welcome to I 🧡 Football</h3>
         <form onSubmit={handleSubmit(handleStatusUser)}>
           <Input
@@ -73,7 +83,7 @@ export default function Auth() {
             Enter
           </Button>
         </form>
-      </main>
+      </Main>
       <aside>
         <Image src={bkgd} alt="home background" width={500} height={500} />
       </aside>

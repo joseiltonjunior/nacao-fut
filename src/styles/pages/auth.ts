@@ -10,23 +10,6 @@ export const Container = styled('div', {
 
   transition: 'all 0.2s',
 
-  main: {
-    margin: '0 auto',
-
-    h3: {
-      fontSize: '$xl',
-    },
-
-    form: {
-      marginTop: '1rem',
-      maxWidth: 600,
-      minWidth: 320,
-      gap: '1rem',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-  },
-
   aside: {
     display: 'flex',
     alignItems: 'center',
@@ -57,5 +40,25 @@ export const Container = styled('div', {
     aside: {
       display: 'none',
     },
+  },
+})
+
+export const Main = styled('main', {
+  margin: '0 auto',
+  background: '$gray800',
+  padding: '1.5rem',
+  borderRadius: 8,
+
+  h3: {
+    fontSize: '$xl',
+  },
+
+  form: {
+    marginTop: '2rem',
+    maxWidth: 600,
+    minWidth: 320,
+    gap: '1rem',
+    display: 'flex',
+    flexDirection: 'column',
   },
 })
