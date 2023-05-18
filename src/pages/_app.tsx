@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="I 🧡 Football" />
+        <meta name="description" content="Welcome to my site" />
         <meta name="image" content="https://i.ibb.co/DKXXQN3/screen-home.png" />
         <meta name="author" content="@dvlp.code" />
         <link rel="icon" href="/favicon.ico" />
