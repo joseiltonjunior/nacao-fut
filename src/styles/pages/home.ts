@@ -45,7 +45,7 @@ export const NoContent = styled('div', {
   height: 'calc(100vh - 17rem)',
 })
 
-export const BoxPlayerContent = styled('div', {
+export const BoxContent = styled('div', {
   background: '$gray900',
 
   borderRadius: 8,
@@ -59,7 +59,7 @@ export const BoxPlayerContent = styled('div', {
   },
 })
 
-export const ContentGridPlayer = styled('div', {
+export const ContentGrid = styled('div', {
   padding: '0.5rem 0',
   gap: '1rem',
 
@@ -84,13 +84,31 @@ export const ContentGridPlayer = styled('div', {
   },
 })
 
+export const ContentGridStatistics = styled('div', {
+  display: 'grid',
+  gap: '2rem',
+})
+
 export const ContentBox = styled('div', {
   padding: '1rem',
 })
 
-export const Content = styled('div', {
+export const Content = styled('div', {})
+
+export const StatisticsContent = styled('div', {
   display: 'grid',
-  gridTemplateColumns: '1fr 300px 300px',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '2rem',
+  marginTop: '2rem',
+
+  '@media (max-width: 900px)': {
+    gridTemplateColumns: '1fr',
+  },
+})
+
+export const GraphicContent = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
   gap: '2rem',
   marginTop: '2rem',
 

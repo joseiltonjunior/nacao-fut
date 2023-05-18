@@ -1,5 +1,6 @@
 import { getCssText } from '@/styles'
 import { Html, Head, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 export default function Document() {
   return (
@@ -20,6 +21,9 @@ export default function Document() {
           id="stitches"
           dangerouslySetInnerHTML={{ __html: getCssText() }}
         />
+
+        <Script src="https://cdn.jsdelivr.net/npm/apexcharts"></Script>
+        <Script src="https://cdn.jsdelivr.net/npm/react-apexcharts"></Script>
       </Head>
       <body>
         <Main />
