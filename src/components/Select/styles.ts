@@ -1,7 +1,7 @@
 import { styled } from '@/styles'
 
 export const Container = styled('div', {
-  width: '15rem',
+  width: '100%',
 
   position: 'relative',
 })

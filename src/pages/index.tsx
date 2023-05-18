@@ -33,6 +33,31 @@ export default function Auth() {
 
   const router = useRouter()
 
+  function handleError(type: 'key' | 'limit' | 'generic') {
+    let messageError = ''
+
+    switch (type) {
+      case 'key':
+        messageError = 'Invalid application key'
+        break
+
+      case 'limit':
+        messageError = 'Daily limit exceeded, upgrade your account'
+        break
+
+      default:
+        messageError = 'Unavailable service'
+        break
+    }
+
+    showToast(messageError, {
+      type: 'error',
+      theme: 'colored',
+    })
+
+    setIsLoading(false)
+  }
+
   async function handleStatusUser({ clientSecretKey }: authProps) {
     setIsLoading(true)
     await axios
@@ -44,32 +69,20 @@ export default function Auth() {
           errors.token &&
           errors.token.includes('Error/Missing application key')
         ) {
-          showToast('Invalid application key', {
-            type: 'error',
-            theme: 'colored',
-          })
-
+          handleError('key')
           return
         }
 
         if (response.requests.current >= response.requests.limit_day) {
-          showToast('Daily limit exceeded, upgrade your account', {
-            type: 'error',
-            theme: 'colored',
-          })
-
+          handleError('limit')
           return
         }
 
         router.push(`/home/${clientSecretKey}`)
       })
       .catch(() => {
-        showToast('Unavailable service', {
-          type: 'error',
-          theme: 'colored',
-        })
+        handleError('generic')
       })
-      .finally(() => setIsLoading(false))
   }
 
   return (

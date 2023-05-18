@@ -11,6 +11,10 @@ import axios from 'axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { Container, Form, Content, NoContent } from '@/styles/pages/home'
+import { HomeSkeleton } from '@/components/HomeSkeleton'
+import noContentIcon from '@/assets/no-content.png'
+import Image from 'next/image'
 
 export default function Home({ user, countries, seasons, apiKey }: homeProps) {
   const [country, setCountry] = useState<string>('')
@@ -78,20 +82,33 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
       .catch((err) => console.log(err))
   }
 
+  const handleTurn = () => {
+    const hours = new Date().getHours()
+    let message = ''
+
+    if (hours >= 0 && hours < 12) {
+      message = 'Good morning'
+    } else if (hours >= 12 && hours < 18) {
+      message = 'Good afternoon'
+    } else {
+      message = 'Good night'
+    }
+    return message
+  }
+
   if (isFallback) {
-    return <p>Loading...</p>
+    return <HomeSkeleton />
   }
 
   return (
     <>
-      <Header />
+      <Header title={`Hello ${user?.account.firstname}, ${handleTurn()}.`} />
 
-      <div>
-        <p>
-          Olá, {user?.account.firstname} {user?.account.lastname}
-        </p>
-
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+      <Container>
+        <h3>
+          Track the statistics of your favorite team and the global football.
+        </h3>
+        <Form>
           <Select
             label="Select a country"
             // defaultValue=""
@@ -135,8 +152,23 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
             itens={teams}
             onAction={(item) => console.log(item)}
           />
-        </div>
-      </div>
+        </Form>
+
+        <Content>
+          <NoContent>
+            <Image
+              src={noContentIcon}
+              alt="soccer player"
+              width={300}
+              height={300}
+            />
+            <h3>
+              Conduct a search and stay informed about all the statistics of
+              your team.
+            </h3>
+          </NoContent>
+        </Content>
+      </Container>
     </>
   )
 }
@@ -164,7 +196,7 @@ export const getStaticProps: GetStaticProps<any, { key: string }> = async ({
     `https://v3.football.api-sports.io/status`,
     {
       headers: {
-        'x-rapidapi-key': params?.key,
+        'x-rapidapi-key': params.key,
         'x-rapidapi-host': 'api-football.com',
       },
     },
@@ -185,7 +217,7 @@ export const getStaticProps: GetStaticProps<any, { key: string }> = async ({
     `https://v3.football.api-sports.io/countries`,
     {
       headers: {
-        'x-rapidapi-key': params?.key,
+        'x-rapidapi-key': params.key,
         'x-rapidapi-host': 'api-football.com',
       },
     },
@@ -195,7 +227,7 @@ export const getStaticProps: GetStaticProps<any, { key: string }> = async ({
     `https://v3.football.api-sports.io/leagues/seasons`,
     {
       headers: {
-        'x-rapidapi-key': params?.key,
+        'x-rapidapi-key': params.key,
         'x-rapidapi-host': 'api-football.com',
       },
     },
