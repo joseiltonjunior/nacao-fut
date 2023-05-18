@@ -94,7 +94,7 @@ export const DropdownContainer = styled('div', {
   '-webkitBoxShadow': '-1px 5px 5px 0px rgba(0,0,0,0.3)',
   '-mozBoxShadow': '-1px 5px 5px 0px rgba(0,0,0,0.3)',
 
-  width: '15rem',
+  width: '100%',
   maxHeight: '20rem',
   overflowY: 'scroll',
 
