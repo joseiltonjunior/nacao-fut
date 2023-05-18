@@ -4,28 +4,44 @@
 <br/>
 
 
+
+
+
+
+
+
 <div align="center">
-  <img src="https://i.ibb.co/p0KPMqZ/auth.png" alt="auth" border="0">
+  <img src="https://i.ibb.co/DKXXQN3/screen-home.png" alt="auth" border="0">
 
-  <img src="https://i.ibb.co/ZKKtvg4/graphic-statisc.png" alt="seleted a team" border="0">
+  <img src="https://i.ibb.co/Hq8p6XK/screen-statistics-home.png" alt="home statistics" border="0">
 
-  <img src="https://i.ibb.co/h71R8zr/seleted-team.png" alt="home statistics" border="0">
-
-  <img src="https://i.ibb.co/Q91PbqL/statistic-home.png" alt="home graphic" border="0">
+  <img src="https://i.ibb.co/yVpkxcF/screen-statistics-graphic.png" alt="home graphic" border="0">
 
   <div>
   </div>
 </div>
 
+<br/>
+
+#### Step 1 (Clone the project)
 ```sh
-# open your terminal and running
-
-$step 1:(clone the repositorie) -> git clone https://github.com/joseiltonjunior/i-love-football.git
-$step 2:(open past) -> cd i-love-football
-$step 3:(install dependencies) -> npm i or yarn 
-$step 4:(run server and open project) -> npm run dev or yarn dev
-
-# open your browser at localhost:3000
+$ git clone https://github.com/joseiltonjunior/i-love-football.git
+```
+#### Step 2 (Open a project)
+```sh
+$ cd i-love-football
+```
+#### Step 3 (Install yours dependencies)
+```sh
+$ npm i or yarn 
+```
+#### Step 4 (Run project)
+```sh
+$ npm run dev or yarn dev
+```
+### Setep 5 ()open your browser at localhost:3000
+```sh
+http://localhost:3000
 ```
 
 ## Credits
