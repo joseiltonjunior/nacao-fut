@@ -1,6 +1,6 @@
 <h1 align="center">I 🧡 Football</h1>
 
-<h3 align="center">To stay updated on the world of football and the statistics of your favorite team, you can create an account on the <a href="https://dashboard.api-football.com/login">API Sports</a> platform and obtain an <a href="https://dashboard.api-football.com/profile?access">API key</a>. With this key, you can access the website and retrieve information about your team's performance in the current season. Simply filter by country, season, league, and team to obtain the desired data. ⚽</h3>
+<h3 align="center">To stay updated on the world of football and the statistics of your favorite team, you can create an account on the <a href="https://dashboard.api-football.com/login" target="_blank">API Sports</a> platform and obtain an <a href="https://dashboard.api-football.com/profile?access" target="_blank">API key</a>. With this key, you can access the website and retrieve information about your team's performance in the current season. Simply filter by country, season, league, and team to obtain the desired data. ⚽</h3>
 <br/>
 
 
@@ -46,5 +46,5 @@ http://localhost:3000
 
 ## Credits
 
-<a href="https://www.instagram.com/dvlp.code/">Junior Ferreira</a> at Full-stack Developer JS
+<a href="https://www.instagram.com/dvlp.code/" target="_blank">Junior Ferreira</a> at Full-stack Developer JS
 
