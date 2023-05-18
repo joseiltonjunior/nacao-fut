@@ -1,15 +1,7 @@
 import { Container } from './styles'
 
-import { FieldError, UseFormRegister } from 'react-hook-form'
-import { InputHTMLAttributes, useState } from 'react'
-
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  error?: FieldError
-  name: string
-
-  label: string
-  register: UseFormRegister<any>
-}
+import { useState } from 'react'
+import { InputProps } from '@/types/input'
 
 export function Input({
   label,
