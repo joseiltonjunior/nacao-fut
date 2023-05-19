@@ -39,8 +39,7 @@ $ npm i or yarn
 ```sh
 $ npm run dev or yarn dev
 ```
-### Step 5 (
-open your browser at localhost:3000) 
+### Step 5 (open your browser at localhost:3000) 
 ```sh
 http://localhost:3000
 ```
