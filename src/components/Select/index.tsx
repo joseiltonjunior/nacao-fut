@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Skeleton from 'react-loading-skeleton'
 
 import {
   Container,
@@ -18,6 +19,7 @@ export function Select({
   label,
   disabled,
   defaultValue,
+  isLoading,
 }: SelectProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
@@ -28,6 +30,14 @@ export function Select({
 
     setSelectedItemIndex(itemFoundIndex)
   }, [defaultValue, itens])
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Skeleton width={'100%'} height={40} />
+      </Container>
+    )
+  }
 
   return (
     <Container

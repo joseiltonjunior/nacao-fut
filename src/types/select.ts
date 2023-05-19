@@ -11,4 +11,5 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   itens: ItensDropdownProps[]
   label: string
   onAction(key: ItensDropdownProps): void
+  isLoading?: boolean
 }

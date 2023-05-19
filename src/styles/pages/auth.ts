@@ -68,7 +68,7 @@ export const Main = styled('main', {
   form: {
     marginTop: '2rem',
     maxWidth: 600,
-    minWidth: 320,
+    // minWidth: 320,
     gap: '1rem',
     display: 'flex',
     flexDirection: 'column',

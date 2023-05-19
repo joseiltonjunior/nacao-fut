@@ -6,10 +6,10 @@ export function StatisticsSkeleton() {
     <>
       <header>
         <Skeleton width={80} height={80} />
-        <div>
-          <Skeleton width={300} height={16} />
+        <div style={{ width: '100%', maxWidth: 300 }}>
+          <Skeleton width={'100%'} height={16} />
 
-          <Skeleton width={300} height={16} />
+          <Skeleton width={'100%'} height={16} />
         </div>
       </header>
 
