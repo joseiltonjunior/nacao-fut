@@ -31,6 +31,7 @@ import {
 } from '@/styles/pages/home'
 import { HomeSkeleton } from '@/components/HomeSkeleton'
 import noContentIcon from '@/assets/no-content.png'
+import badIcon from '@/assets/bad.png'
 import Image from 'next/image'
 import { handleTurn } from '@/utils/handleTurnDay'
 import { ChartComponent } from '@/components/Graphic'
@@ -40,6 +41,7 @@ import { StatisticsSkeleton } from '@/components/StatisticsSkeleton'
 import { DontHaveContent } from '@/components/DontHaveContent'
 import { useSelector } from 'react-redux'
 import { reduxProps } from '@/storage'
+import Link from 'next/link'
 
 export default function Home({ countries, seasons, apiKey }: homeProps) {
   const [country, setCountry] = useState('')
@@ -388,16 +390,33 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
             <StatisticsSkeleton />
           ) : (
             <NoContent>
-              <Image
-                src={noContentIcon}
-                alt="soccer player"
-                width={300}
-                height={300}
-              />
+              {countries.length === 0 ? (
+                <Image
+                  src={badIcon}
+                  alt="bad icon"
+                  width={150}
+                  height={150}
+                  style={{ marginBottom: '1rem' }}
+                />
+              ) : (
+                <Image
+                  src={noContentIcon}
+                  alt="soccer player"
+                  width={300}
+                  height={300}
+                />
+              )}
               <h3>
-                Conduct a search and stay informed about all the statistics of
-                your team.
+                {countries.length === 0
+                  ? 'Check the restrictions of your account regarding the API key, as they may be causing issues.'
+                  : 'Conduct a search and stay informed about all the statistics of your team.'}
               </h3>
+              <Link
+                href={'https://dashboard.api-football.com/'}
+                target="_blank"
+              >
+                API Sports
+              </Link>
             </NoContent>
           )}
         </Main>
