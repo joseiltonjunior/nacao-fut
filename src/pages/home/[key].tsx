@@ -9,6 +9,7 @@ import {
   teamPlayerResponseProps,
   teamResponseProps,
   teamPlayerDataProps,
+  userDataProps,
 } from '@/types/home'
 
 import axios from 'axios'
@@ -36,11 +37,16 @@ import { ChartComponent } from '@/components/Graphic'
 import { useToast } from '@/hooks/useToast'
 
 import { StatisticsSkeleton } from '@/components/StatisticsSkeleton'
+import { DontHaveContent } from '@/components/DontHaveContent'
+import { useSelector } from 'react-redux'
+import { reduxProps } from '@/storage'
 
-export default function Home({ user, countries, seasons, apiKey }: homeProps) {
+export default function Home({ countries, seasons, apiKey }: homeProps) {
   const [country, setCountry] = useState('')
   const [season, setSeason] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingLeagues, setIsLoadingLeagues] = useState(false)
+  const [isLoadingTeams, setIsLoadingTeams] = useState(false)
   const [league, setLeague] = useState<number | string>()
   const [leagues, setLeagues] = useState<selectProps[]>([
     { flag: '', name: '', value: 0 },
@@ -52,24 +58,21 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
   const [teamSeleted, setTeamSelected] = useState<teamResponseProps>()
 
   const [teamStatistics, setTeamStatistics] =
-    useState<teamStatisticsResponseProps>()
+    useState<teamStatisticsResponseProps | null>()
 
   const [players, setPlayers] = useState<teamPlayerDataProps[]>()
+
+  const user = useSelector<reduxProps, userDataProps>((state) => state.user)
 
   const { isFallback } = useRouter()
 
   const { showToast } = useToast()
 
   async function handleGetLeagues(season: string) {
+    setIsLoadingLeagues(true)
     await axios
       .get(
-        `https://v3.football.api-sports.io/leagues?country=${country}&season=${season}`,
-        {
-          headers: {
-            'x-rapidapi-key': apiKey,
-            'x-rapidapi-host': 'api-football.com',
-          },
-        },
+        `/api/fetchManyLeagues?country=${country}&season=${season}&key=${apiKey}`,
       )
       .then((result) => {
         const leaguesResult = result.data.response.map(
@@ -90,18 +93,14 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
           theme: 'colored',
         }),
       )
+      .finally(() => setIsLoadingLeagues(false))
   }
 
   async function handleGetTeams(league: number | string) {
+    setIsLoadingTeams(true)
     await axios
       .get(
-        `https://v3.football.api-sports.io/teams?country=${country}&season=${season}&league=${league}`,
-        {
-          headers: {
-            'x-rapidapi-key': apiKey,
-            'x-rapidapi-host': 'api-football.com',
-          },
-        },
+        `/api/fetchManyTeams?country=${country}&seasonId=${season}&leagueId=${league}&key=${apiKey}`,
       )
       .then((result) => {
         const teamsResult = result.data.response.map(
@@ -122,18 +121,13 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
           theme: 'colored',
         }),
       )
+      .finally(() => setIsLoadingTeams(false))
   }
 
   async function handleGetTeam(teamId: number | string) {
     await axios
       .get(
-        `https://v3.football.api-sports.io/teams?country=${country}&season=${season}&league=${league}&id=${teamId}`,
-        {
-          headers: {
-            'x-rapidapi-key': apiKey,
-            'x-rapidapi-host': 'api-football.com',
-          },
-        },
+        `/api/fetchTeam?country=${country}&seasonId=${season}&leagueId=${league}&teamId=${teamId}&key=${apiKey}`,
       )
       .then((result) => {
         const teamResponse = result.data.response[0]
@@ -151,13 +145,7 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
   async function handleGetTeamPlayers(teamId: number | string) {
     await axios
       .get(
-        `https://v3.football.api-sports.io/players?season=${season}&league=${league}&team=${teamId}`,
-        {
-          headers: {
-            'x-rapidapi-key': apiKey,
-            'x-rapidapi-host': 'api-football.com',
-          },
-        },
+        `/api/fetchTeamPlayers?seasonId=${season}&leagueId=${league}&teamId=${teamId}&key=${apiKey}`,
       )
       .then((result) => {
         const teamPlayersResponse = result.data.response.map(
@@ -184,22 +172,14 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
 
   async function handleGetTeamStatistics(teamId: number | string) {
     setIsLoading(true)
+    setTeamStatistics(null)
     await axios
       .get(
-        `https://v3.football.api-sports.io/teams/statistics?season=${season}&league=${league}&team=${teamId}`,
-        {
-          headers: {
-            'x-rapidapi-key': apiKey,
-            'x-rapidapi-host': 'api-football.com',
-          },
-        },
+        `/api/fetchStatisticsTeam?seasonId=${season}&leagueId=${league}&teamId=${teamId}&key=${apiKey}`,
       )
       .then((result) => {
         const teamStatisticsResponse = result.data.response
         setTeamStatistics(teamStatisticsResponse)
-
-        handleGetTeam(teamId)
-        handleGetTeamPlayers(teamId)
       })
       .catch(() =>
         showToast('The statistics could not be fetched.', {
@@ -216,7 +196,7 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
 
   return (
     <>
-      <Header title={`Hello ${user?.account.firstname}, ${handleTurn()}.`} />
+      <Header title={`Hello ${user.account.firstname}, ${handleTurn()}.`} />
 
       <Container>
         <h3>
@@ -249,6 +229,7 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
           />
 
           <Select
+            isLoading={isLoadingLeagues}
             disabled={leagues.length <= 1}
             label="Select a league"
             itens={leagues}
@@ -260,11 +241,14 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
           />
 
           <Select
+            isLoading={isLoadingTeams}
             disabled={teams.length <= 1}
             label="Select a team"
             itens={teams}
             onAction={(item) => {
               handleGetTeamStatistics(item.value)
+              handleGetTeam(item.value)
+              handleGetTeamPlayers(item.value)
             }}
           />
         </Form>
@@ -294,61 +278,78 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
                   <BoxContent>
                     <h4>Players</h4>
 
-                    <ContentBox>
-                      <ContentGrid borderBottom grid>
-                        <strong>Name</strong>
-                        <strong>Age</strong>
-                        <strong>Nationality</strong>
-                      </ContentGrid>
-
-                      {players.map((player) => (
-                        <ContentGrid key={player.name} borderBottom grid>
-                          <p>{player.name}</p>
-                          <p>{player.age}</p>
-                          <p>{player.nationality}</p>
+                    {players && players.length > 0 ? (
+                      <ContentBox>
+                        <ContentGrid borderBottom grid>
+                          <strong>Name</strong>
+                          <strong>Age</strong>
+                          <strong>Nationality</strong>
                         </ContentGrid>
-                      ))}
-                    </ContentBox>
+
+                        {players.map((player) => (
+                          <ContentGrid key={player.name} borderBottom grid>
+                            <p>{player.name}</p>
+                            <p>{player.age}</p>
+                            <p>{player.nationality}</p>
+                          </ContentGrid>
+                        ))}
+                      </ContentBox>
+                    ) : (
+                      <DontHaveContent style={{ height: '100%' }} />
+                    )}
                   </BoxContent>
 
                   <ContentGridStatistics>
                     <BoxContent>
                       <h4>Top used lineups</h4>
-                      <ContentBox>
-                        <ContentGrid flex borderBottom>
-                          <strong>Lineups</strong>
-                          <strong>Total games</strong>
-                        </ContentGrid>
 
-                        {teamStatistics.lineups.map((lineUp) => (
-                          <ContentGrid flex key={lineUp.formation} borderBottom>
-                            <p>{lineUp.formation}</p>
-                            <p>{lineUp.played}</p>
+                      {teamStatistics.lineups &&
+                      teamStatistics.lineups.length > 0 ? (
+                        <ContentBox>
+                          <ContentGrid flex borderBottom>
+                            <strong>Lineups</strong>
+                            <strong>Total games</strong>
                           </ContentGrid>
-                        ))}
-                      </ContentBox>
+                          {teamStatistics.lineups.map((lineUp) => (
+                            <ContentGrid
+                              flex
+                              key={lineUp.formation}
+                              borderBottom
+                            >
+                              <p>{lineUp.formation}</p>
+                              <p>{lineUp.played}</p>
+                            </ContentGrid>
+                          ))}
+                        </ContentBox>
+                      ) : (
+                        <DontHaveContent />
+                      )}
                     </BoxContent>
 
                     <BoxContent>
                       <h4>Result games</h4>
-                      <ContentBox>
-                        <ContentGrid flex borderBottom>
-                          <strong>Wins</strong>
-                          <p>{teamStatistics.fixtures.wins.total}</p>
-                        </ContentGrid>
-                        <ContentGrid flex borderBottom>
-                          <strong>Draws</strong>
-                          <p>{teamStatistics.fixtures.draws.total}</p>
-                        </ContentGrid>
-                        <ContentGrid flex borderBottom>
-                          <strong>Loses</strong>
-                          <p>{teamStatistics.fixtures.loses.total}</p>
-                        </ContentGrid>
-                        <ContentGrid flex borderBottom>
-                          <strong>Total</strong>
-                          <p>{teamStatistics.fixtures.played.total}</p>
-                        </ContentGrid>
-                      </ContentBox>
+                      {teamStatistics.fixtures ? (
+                        <ContentBox>
+                          <ContentGrid flex borderBottom>
+                            <strong>Wins</strong>
+                            <p>{teamStatistics.fixtures.wins.total}</p>
+                          </ContentGrid>
+                          <ContentGrid flex borderBottom>
+                            <strong>Draws</strong>
+                            <p>{teamStatistics.fixtures.draws.total}</p>
+                          </ContentGrid>
+                          <ContentGrid flex borderBottom>
+                            <strong>Loses</strong>
+                            <p>{teamStatistics.fixtures.loses.total}</p>
+                          </ContentGrid>
+                          <ContentGrid flex borderBottom>
+                            <strong>Total</strong>
+                            <p>{teamStatistics.fixtures.played.total}</p>
+                          </ContentGrid>
+                        </ContentBox>
+                      ) : (
+                        <DontHaveContent />
+                      )}
                     </BoxContent>
                   </ContentGridStatistics>
                 </StatisticsContent>
@@ -356,19 +357,29 @@ export default function Home({ user, countries, seasons, apiKey }: homeProps) {
                 <GraphicContent>
                   <BoxContent>
                     <h4>For goals</h4>
-                    <div style={{ padding: '1rem 1rem 0 0' }}>
-                      <ChartComponent
-                        minute={teamStatistics.goals.for.minute}
-                      />
-                    </div>
+                    {teamStatistics.goals &&
+                    teamStatistics.goals.for.total.total > 0 ? (
+                      <div style={{ padding: '1rem 1rem 0 0' }}>
+                        <ChartComponent
+                          minute={teamStatistics.goals.for.minute}
+                        />
+                      </div>
+                    ) : (
+                      <DontHaveContent />
+                    )}
                   </BoxContent>
                   <BoxContent>
                     <h4>Agaisnt goals</h4>
-                    <div style={{ padding: '1rem 1rem 0 0' }}>
-                      <ChartComponent
-                        minute={teamStatistics.goals.against.minute}
-                      />
-                    </div>
+                    {teamStatistics.goals &&
+                    teamStatistics.goals.for.total.total ? (
+                      <div style={{ padding: '1rem 1rem 0 0' }}>
+                        <ChartComponent
+                          minute={teamStatistics.goals.against.minute}
+                        />
+                      </div>
+                    ) : (
+                      <DontHaveContent />
+                    )}
                   </BoxContent>
                 </GraphicContent>
               </Content>
@@ -414,27 +425,6 @@ export const getStaticProps: GetStaticProps<any, { key: string }> = async ({
     }
   }
 
-  const userResponse = await axios.get(
-    `https://v3.football.api-sports.io/status`,
-    {
-      headers: {
-        'x-rapidapi-key': params.key,
-        'x-rapidapi-host': 'api-football.com',
-      },
-    },
-  )
-
-  const { errors } = userResponse.data
-
-  if (errors.token && errors.token.includes('Error/Missing application key')) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
-
   const countriesResponse = await axios.get(
     `https://v3.football.api-sports.io/countries`,
     {
@@ -466,7 +456,7 @@ export const getStaticProps: GetStaticProps<any, { key: string }> = async ({
       return formart
     },
   )
-  const user = userResponse.data.response
+
   const seasons = seasonsResponse.data.response.map((season: string[]) => {
     const formart = {
       name: season,
@@ -477,7 +467,7 @@ export const getStaticProps: GetStaticProps<any, { key: string }> = async ({
   })
 
   return {
-    props: { user, countries, seasons, apiKey: params.key },
+    props: { countries, seasons, apiKey: params.key },
     revalidate: 60 * 60 * 2, // 2 hours
   }
 }

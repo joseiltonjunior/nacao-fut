@@ -2,6 +2,9 @@ import { globalStyles } from '@/styles/global'
 import type { AppProps } from 'next/app'
 import { SkeletonTheme } from 'react-loading-skeleton'
 import { ToastContainer } from 'react-toastify'
+import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor } from '../storage'
+import { Provider } from 'react-redux'
 
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -21,10 +24,14 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>I Love Football</title>
       </Head>
 
-      <SkeletonTheme baseColor={'#202024'} highlightColor={'#121214'}>
-        <ToastContainer />
-        <Component {...pageProps} />
-      </SkeletonTheme>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <SkeletonTheme baseColor={'#202024'} highlightColor={'#121214'}>
+            <ToastContainer />
+            <Component {...pageProps} />
+          </SkeletonTheme>
+        </PersistGate>
+      </Provider>
     </>
   )
 }

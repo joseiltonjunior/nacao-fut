@@ -41,7 +41,7 @@ export const NoContent = styled('div', {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-
+  textAlign: 'center',
   height: 'calc(100vh - 17rem)',
 })
 

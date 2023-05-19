@@ -5,7 +5,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { type, key } = req.query
+  const { key, country, seasonId, leagueId, teamId } = req.query
 
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' })
@@ -13,7 +13,7 @@ export default async function handler(
 
   try {
     const response = await axios.get(
-      `https://v3.football.api-sports.io/${type}`,
+      `https://v3.football.api-sports.io/teams?country=${country}&season=${seasonId}&league=${leagueId}&id=${teamId}`,
       {
         headers: {
           'x-rapidapi-key': key,

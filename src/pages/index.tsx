@@ -14,6 +14,8 @@ import bkgd from '@/assets/home-bkgd-removebg-preview.png'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { authProps } from '@/types/auth'
+import { useDispatch } from 'react-redux'
+import { setUser } from '@/storage/modules/user/action'
 
 const schema = z.object({
   clientSecretKey: z.string().min(25, { message: 'minimum of 25 characters' }),
@@ -30,6 +32,7 @@ export default function Auth() {
 
   const [isLoading, setIsLoading] = useState(false)
   const { showToast } = useToast()
+  const dispatch = useDispatch()
 
   const router = useRouter()
 
@@ -61,7 +64,7 @@ export default function Auth() {
   async function handleStatusUser({ clientSecretKey }: authProps) {
     setIsLoading(true)
     await axios
-      .get(`/api/football?type=status&key=${clientSecretKey}`)
+      .get(`/api/status?key=${clientSecretKey}`)
       .then((result) => {
         const { errors, response } = result.data
 
@@ -78,6 +81,7 @@ export default function Auth() {
           return
         }
 
+        dispatch(setUser({ user: response }))
         router.push(`/home/${clientSecretKey}`)
       })
       .catch(() => {
