@@ -43,6 +43,17 @@ export const NoContent = styled('div', {
   alignItems: 'center',
   textAlign: 'center',
   height: 'calc(100vh - 17rem)',
+
+  a: {
+    color: '$orange500',
+    marginTop: '0.5rem',
+    textDecoration: 'none',
+    fontSize: '$md',
+
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
 })
 
 export const BoxContent = styled('div', {
