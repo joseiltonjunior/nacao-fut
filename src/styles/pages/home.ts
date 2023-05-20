@@ -5,7 +5,7 @@ export const Container = styled('div', {
 
   padding: '2rem',
   maxWidth: 'calc(100vw - ((100vw - 1180px) / 2))',
-  margin: '0 auto',
+  margin: '0 auto 2rem',
 })
 
 export const Form = styled('div', {
@@ -33,40 +33,6 @@ export const Main = styled('main', {
     display: 'flex',
     alignItems: 'center',
     gap: '1rem',
-  },
-})
-
-export const NoContent = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  textAlign: 'center',
-  height: 'calc(100vh - 17rem)',
-
-  a: {
-    color: '$orange500',
-    marginTop: '0.5rem',
-    textDecoration: 'none',
-    fontSize: '$md',
-
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-  },
-})
-
-export const BoxContent = styled('div', {
-  background: '$gray900',
-
-  borderRadius: 8,
-
-  h4: {
-    color: '$gray800',
-
-    background: '$orange500',
-    padding: '0.5rem',
-    borderRadius: '8px 8px 0 0',
   },
 })
 
@@ -107,17 +73,6 @@ export const ContentBox = styled('div', {
 export const Content = styled('div', {})
 
 export const StatisticsContent = styled('div', {
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: '2rem',
-  marginTop: '2rem',
-
-  '@media (max-width: 900px)': {
-    gridTemplateColumns: '1fr',
-  },
-})
-
-export const GraphicContent = styled('div', {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   gap: '2rem',

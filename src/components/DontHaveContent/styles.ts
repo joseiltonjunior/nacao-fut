@@ -3,11 +3,19 @@ import { styled } from '@/styles'
 export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  padding: '1rem',
-  alignItems: 'center',
   justifyContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center',
+  height: 'calc(100vh - 17rem)',
 
-  strong: {
-    marginTop: '1rem',
+  a: {
+    color: '$orange500',
+    marginTop: '0.5rem',
+    textDecoration: 'none',
+    fontSize: '$md',
+
+    '&:hover': {
+      textDecoration: 'underline',
+    },
   },
 })

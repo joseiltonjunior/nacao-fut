@@ -21,27 +21,23 @@ import {
   Form,
   Content,
   Main,
-  NoContent,
-  BoxContent,
-  ContentGrid,
-  ContentBox,
-  GraphicContent,
   StatisticsContent,
   ContentGridStatistics,
 } from '@/styles/pages/home'
 import { HomeSkeleton } from '@/components/HomeSkeleton'
-import noContentIcon from '@/assets/no-content.png'
-import badIcon from '@/assets/bad.png'
-import Image from 'next/image'
-import { handleTurn } from '@/utils/handleTurnDay'
-import { ChartComponent } from '@/components/Graphic'
-import { useToast } from '@/hooks/useToast'
-
 import { StatisticsSkeleton } from '@/components/StatisticsSkeleton'
-import { DontHaveContent } from '@/components/DontHaveContent'
+
+import { useToast } from '@/hooks/useToast'
 import { useSelector } from 'react-redux'
 import { reduxProps } from '@/storage'
-import Link from 'next/link'
+
+import { DontHaveContent } from '@/components/DontHaveContent'
+import { GraphicGoalsStatistics } from '@/components/GraphicGoalsStatistics'
+import { StatisticsPlayers } from '@/components/StatisticsPlayers'
+import { StatisticsLineups } from '@/components/StatisticsLineups'
+import { StatisticsGames } from '@/components/StatisticsGames'
+
+import { StatisticsTeam } from '@/components/StatisticsTeam'
 
 export default function Home({ countries, seasons, apiKey }: homeProps) {
   const [country, setCountry] = useState('')
@@ -56,18 +52,14 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
   const [teams, setTeams] = useState<selectProps[]>([
     { flag: '', name: '', value: 0 },
   ])
-
   const [teamSeleted, setTeamSelected] = useState<teamResponseProps>()
-
   const [teamStatistics, setTeamStatistics] =
     useState<teamStatisticsResponseProps | null>()
-
   const [players, setPlayers] = useState<teamPlayerDataProps[]>()
 
   const user = useSelector<reduxProps, userDataProps>((state) => state.user)
 
   const { isFallback } = useRouter()
-
   const { showToast } = useToast()
 
   async function handleGetLeagues(season: string) {
@@ -198,11 +190,12 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
 
   return (
     <>
-      <Header title={`Hello ${user.account.firstname}, ${handleTurn()}.`} />
+      <Header />
 
       <Container>
         <h3>
-          Track the statistics of your favorite team and the global football.
+          Hey {user.account.firstname}, track the statistics of your favorite
+          team.
         </h3>
         <Form>
           <Select
@@ -258,166 +251,22 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
         <Main>
           {teamSeleted && teamStatistics && players ? (
             <>
-              <header>
-                <Image
-                  src={teamSeleted.logo}
-                  alt="logo team"
-                  width={80}
-                  height={80}
-                />
-                <div>
-                  <strong>
-                    {teamSeleted.name} - {teamSeleted.code}
-                  </strong>
-                  <p>
-                    {teamSeleted.country}, {teamSeleted.founded}
-                  </p>
-                </div>
-              </header>
-
+              <StatisticsTeam team={teamSeleted} />
               <Content>
                 <StatisticsContent>
-                  <BoxContent>
-                    <h4>Players</h4>
-
-                    {players && players.length > 0 ? (
-                      <ContentBox>
-                        <ContentGrid borderBottom grid>
-                          <strong>Name</strong>
-                          <strong>Age</strong>
-                          <strong>Nationality</strong>
-                        </ContentGrid>
-
-                        {players.map((player) => (
-                          <ContentGrid key={player.name} borderBottom grid>
-                            <p>{player.name}</p>
-                            <p>{player.age}</p>
-                            <p>{player.nationality}</p>
-                          </ContentGrid>
-                        ))}
-                      </ContentBox>
-                    ) : (
-                      <DontHaveContent style={{ height: '100%' }} />
-                    )}
-                  </BoxContent>
-
+                  <StatisticsPlayers players={players} />
                   <ContentGridStatistics>
-                    <BoxContent>
-                      <h4>Top used lineups</h4>
-
-                      {teamStatistics.lineups &&
-                      teamStatistics.lineups.length > 0 ? (
-                        <ContentBox>
-                          <ContentGrid flex borderBottom>
-                            <strong>Lineups</strong>
-                            <strong>Total games</strong>
-                          </ContentGrid>
-                          {teamStatistics.lineups.map((lineUp) => (
-                            <ContentGrid
-                              flex
-                              key={lineUp.formation}
-                              borderBottom
-                            >
-                              <p>{lineUp.formation}</p>
-                              <p>{lineUp.played}</p>
-                            </ContentGrid>
-                          ))}
-                        </ContentBox>
-                      ) : (
-                        <DontHaveContent />
-                      )}
-                    </BoxContent>
-
-                    <BoxContent>
-                      <h4>Result games</h4>
-                      {teamStatistics.fixtures ? (
-                        <ContentBox>
-                          <ContentGrid flex borderBottom>
-                            <strong>Wins</strong>
-                            <p>{teamStatistics.fixtures.wins.total}</p>
-                          </ContentGrid>
-                          <ContentGrid flex borderBottom>
-                            <strong>Draws</strong>
-                            <p>{teamStatistics.fixtures.draws.total}</p>
-                          </ContentGrid>
-                          <ContentGrid flex borderBottom>
-                            <strong>Loses</strong>
-                            <p>{teamStatistics.fixtures.loses.total}</p>
-                          </ContentGrid>
-                          <ContentGrid flex borderBottom>
-                            <strong>Total</strong>
-                            <p>{teamStatistics.fixtures.played.total}</p>
-                          </ContentGrid>
-                        </ContentBox>
-                      ) : (
-                        <DontHaveContent />
-                      )}
-                    </BoxContent>
+                    <StatisticsLineups lineups={teamStatistics.lineups} />
+                    <StatisticsGames fixtures={teamStatistics.fixtures} />
                   </ContentGridStatistics>
                 </StatisticsContent>
-
-                <GraphicContent>
-                  <BoxContent>
-                    <h4>For goals</h4>
-                    {teamStatistics.goals &&
-                    teamStatistics.goals.for.total.total > 0 ? (
-                      <div style={{ padding: '1rem 1rem 0 0' }}>
-                        <ChartComponent
-                          minute={teamStatistics.goals.for.minute}
-                        />
-                      </div>
-                    ) : (
-                      <DontHaveContent />
-                    )}
-                  </BoxContent>
-                  <BoxContent>
-                    <h4>Agaisnt goals</h4>
-                    {teamStatistics.goals &&
-                    teamStatistics.goals.for.total.total ? (
-                      <div style={{ padding: '1rem 1rem 0 0' }}>
-                        <ChartComponent
-                          minute={teamStatistics.goals.against.minute}
-                        />
-                      </div>
-                    ) : (
-                      <DontHaveContent />
-                    )}
-                  </BoxContent>
-                </GraphicContent>
+                <GraphicGoalsStatistics goals={teamStatistics.goals} />
               </Content>
             </>
           ) : isLoading ? (
             <StatisticsSkeleton />
           ) : (
-            <NoContent>
-              {countries.length === 0 ? (
-                <Image
-                  src={badIcon}
-                  alt="bad icon"
-                  width={150}
-                  height={150}
-                  style={{ marginBottom: '1rem' }}
-                />
-              ) : (
-                <Image
-                  src={noContentIcon}
-                  alt="soccer player"
-                  width={300}
-                  height={300}
-                />
-              )}
-              <h3>
-                {countries.length === 0
-                  ? 'Check the restrictions of your account regarding the API key, as they may be causing issues.'
-                  : 'Conduct a search and stay informed about all the statistics of your team.'}
-              </h3>
-              <Link
-                href={'https://dashboard.api-football.com/'}
-                target="_blank"
-              >
-                API Sports
-              </Link>
-            </NoContent>
+            <DontHaveContent restrictions={countries.length === 0} />
           )}
         </Main>
       </Container>

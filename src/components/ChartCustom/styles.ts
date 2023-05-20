@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-export const ChartCustom = styled(Chart, {
+export const Container = styled(Chart, {
   '.apexcharts-menu': {
     backgroundColor: '$gray300',
     color: '$gray900',

@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { authProps } from '@/types/auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '@/storage/modules/user/action'
+import { Header } from '@/components/Header'
 
 const schema = z.object({
   clientSecretKey: z.string().min(25, { message: 'minimum of 25 characters' }),
@@ -90,31 +91,34 @@ export default function Auth() {
   }
 
   return (
-    <Container>
-      <Main>
-        <h3>Hello, welcome to I 🧡 Football</h3>
-        <form onSubmit={handleSubmit(handleStatusUser)}>
-          <Input
-            label="Enter your login key"
-            name="clientSecretKey"
-            register={register}
-            error={errors.clientSecretKey}
-          />
-          <Button type="submit" isLoading={isLoading}>
-            Enter
-          </Button>
+    <>
+      <Header isAuth />
+      <Container>
+        <Main>
+          <h3>Hello, welcome to I 🧡 Football</h3>
+          <form onSubmit={handleSubmit(handleStatusUser)}>
+            <Input
+              label="Enter your login key"
+              name="clientSecretKey"
+              register={register}
+              error={errors.clientSecretKey}
+            />
+            <Button type="submit" isLoading={isLoading}>
+              Enter
+            </Button>
 
-          <Link
-            href={'https://dashboard.api-football.com/login'}
-            target="_blank"
-          >
-            Create new account
-          </Link>
-        </form>
-      </Main>
-      <aside>
-        <Image src={bkgd} alt="home background" width={500} height={500} />
-      </aside>
-    </Container>
+            <Link
+              href={'https://dashboard.api-football.com/login'}
+              target="_blank"
+            >
+              Create new account
+            </Link>
+          </form>
+        </Main>
+        <aside>
+          <Image src={bkgd} alt="home background" width={500} height={500} />
+        </aside>
+      </Container>
+    </>
   )
 }
