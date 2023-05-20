@@ -8,7 +8,7 @@ export function DontHaveStatistics({
 }: HTMLAttributes<HTMLDivElement>) {
   return (
     <Container {...rest}>
-      <Image src={bad} alt="icon bad" width={100} height={100} />
+      <Image src={bad} alt="icon bad" width={80} height={80} />
       <strong>No content to display.</strong>
     </Container>
   )

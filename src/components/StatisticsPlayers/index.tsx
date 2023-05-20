@@ -29,7 +29,7 @@ export function StatisticsPlayers({ players }: statisticsPlayersProps) {
           ))}
         </ContentBox>
       ) : (
-        <DontHaveStatistics style={{ height: '100%' }} />
+        <DontHaveStatistics />
       )}
     </BoxContent>
   )
