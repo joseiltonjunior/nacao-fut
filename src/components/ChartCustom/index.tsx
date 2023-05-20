@@ -1,4 +1,4 @@
-import { ChartCustom } from './styles'
+import { Container } from './styles'
 
 interface chartDataProps {
   minute: {
@@ -9,7 +9,7 @@ interface chartDataProps {
   }
 }
 
-export function ChartComponent({ minute }: chartDataProps) {
+export function ChartCustom({ minute }: chartDataProps) {
   const formattedData = Object.entries(minute).map(([label, values]) => ({
     x: label,
     y: values.total,
@@ -29,7 +29,5 @@ export function ChartComponent({ minute }: chartDataProps) {
     },
   ]
 
-  return (
-    <ChartCustom options={options} series={series} type="bar" height={350} />
-  )
+  return <Container options={options} series={series} type="bar" height={350} />
 }

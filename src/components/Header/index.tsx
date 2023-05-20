@@ -1,19 +1,26 @@
 import Link from 'next/link'
 import { Container } from './styles'
 import { GoSignOut } from 'react-icons/go'
+import logo from '@/assets/soccer-player.png'
+import Image from 'next/image'
 
 interface headerProps {
-  title: string
+  isAuth?: boolean
 }
 
-export function Header({ title }: headerProps) {
+export function Header({ isAuth }: headerProps) {
   return (
     <Container>
-      <strong>{title}</strong>
+      <div>
+        <Image src={logo} alt="logo" width={40} height={40} />
+        <strong>I Love Football - ILF</strong>
+      </div>
 
-      <Link href={'/'}>
-        <GoSignOut size={20} />
-      </Link>
+      {!isAuth && (
+        <Link href={'/'} title="SignOut">
+          <GoSignOut size={20} />
+        </Link>
+      )}
     </Container>
   )
 }

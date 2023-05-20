@@ -15,7 +15,7 @@ export const Container = styled('div', {
     alignItems: 'center',
     justifyContent: 'center',
     background: '$gray800',
-    height: '100vh',
+    height: 'calc(100vh - 7.4rem)',
 
     img: {
       width: 'auto',
@@ -28,7 +28,7 @@ export const Container = styled('div', {
 
   '@media (max-width: 1000px)': {
     gridTemplateColumns: '1fr',
-    height: '100vh',
+    height: 'calc(100vh - 7.5rem)',
     padding: '1rem',
 
     main: {

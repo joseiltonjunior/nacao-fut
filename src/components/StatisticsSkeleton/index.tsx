@@ -1,5 +1,6 @@
-import { Content, GraphicContent, StatisticsContent } from '@/styles/pages/home'
+import { Content, StatisticsContent } from '@/styles/pages/home'
 import Skeleton from 'react-loading-skeleton'
+import { GraphicContent } from '../GraphicGoalsStatistics/styles'
 
 export function StatisticsSkeleton() {
   return (

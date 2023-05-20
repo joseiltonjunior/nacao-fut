@@ -48,127 +48,77 @@ export interface teamsResponseProps {
   }
 }
 
+export interface fixturesProps {
+  played: {
+    home: number
+    away: number
+    total: number
+  }
+  wins: {
+    home: number
+    away: number
+    total: number
+  }
+  draws: {
+    home: number
+    away: number
+    total: number
+  }
+  loses: {
+    home: number
+    away: number
+    total: number
+  }
+}
+
+export interface goalsProps {
+  for: {
+    total: {
+      home: number
+      away: number
+      total: number
+    }
+    average: {
+      home: string
+      away: string
+      total: string
+    }
+    minute: {
+      [key: string]: {
+        total: number | null
+        percentage: string | null
+      }
+    }
+  }
+  against: {
+    total: {
+      home: number
+      away: number
+      total: number
+    }
+    average: {
+      home: string
+      away: string
+      total: string
+    }
+    minute: {
+      [key: string]: {
+        total: number | null
+        percentage: string | null
+      }
+    }
+  }
+}
+
+export interface lineupsProps {
+  formation: string
+  played: number
+}
+
 export interface teamStatisticsResponseProps {
-  fixtures: {
-    played: {
-      home: number
-      away: number
-      total: number
-    }
-    wins: {
-      home: number
-      away: number
-      total: number
-    }
-    draws: {
-      home: number
-      away: number
-      total: number
-    }
-    loses: {
-      home: number
-      away: number
-      total: number
-    }
-  }
-  lineups: {
-    formation: string
-    played: number
-  }[]
-  goals: {
-    for: {
-      total: {
-        home: number
-        away: number
-        total: number
-      }
-      average: {
-        home: string
-        away: string
-        total: string
-      }
-      minute: {
-        '0-15': {
-          total: number
-          percentage: string
-        }
-        '16-30': {
-          total: number
-          percentage: string
-        }
-        '31-45': {
-          total: number
-          percentage: string
-        }
-        '46-60': {
-          total: number
-          percentage: string
-        }
-        '61-75': {
-          total: number
-          percentage: string
-        }
-        '76-90': {
-          total: number
-          percentage: string
-        }
-        '91-105': {
-          total: number
-          percentage: string
-        }
-        '106-120': {
-          total: number | null
-          percentage: string | null
-        }
-      }
-    }
-    against: {
-      total: {
-        home: number
-        away: number
-        total: number
-      }
-      average: {
-        home: string
-        away: string
-        total: string
-      }
-      minute: {
-        '0-15': {
-          total: number
-          percentage: string
-        }
-        '16-30': {
-          total: number
-          percentage: string
-        }
-        '31-45': {
-          total: number
-          percentage: string
-        }
-        '46-60': {
-          total: number
-          percentage: string
-        }
-        '61-75': {
-          total: number
-          percentage: string
-        }
-        '76-90': {
-          total: number
-          percentage: string
-        }
-        '91-105': {
-          total: number
-          percentage: string
-        }
-        '106-120': {
-          total: number | null
-          percentage: string | null
-        }
-      }
-    }
-  }
+  fixtures: fixturesProps
+  lineups: lineupsProps[]
+  goals: goalsProps
 }
 
 export interface teamPlayerDataProps {

@@ -11,6 +11,17 @@ export const Container = styled('div', {
 
   padding: '1rem',
 
+  div: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
+  },
+
+  img: {
+    background: '$gray800',
+    borderRadius: 6,
+  },
+
   a: {
     color: '$gray800',
   },
