@@ -2,8 +2,9 @@ import { styled } from '@/styles'
 
 export const Container = styled('div', {
   background: '$gray900',
-
+  height: '100%',
   borderRadius: 8,
+  overflow: 'hidden',
 
   h4: {
     color: '$gray800',
