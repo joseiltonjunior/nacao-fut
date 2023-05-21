@@ -2,7 +2,7 @@ import axios from 'axios'
 import dotenv from 'dotenv'
 
 import { describe, it, expect } from 'vitest'
-dotenv.config({ path: '.env.test' })
+dotenv.config({ path: '.env.local' })
 
 describe('Execeeded limit day. (E2E)', () => {
   it('verify to daily limit exceeded', async () => {
