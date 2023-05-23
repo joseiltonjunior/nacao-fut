@@ -9,7 +9,7 @@ export const Container = styled('div', {
   },
 
   img: {
-    background: '$gray800',
+    background: '$gray900',
     borderRadius: 6,
   },
 

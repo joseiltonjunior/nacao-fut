@@ -6,6 +6,6 @@ export const Container = styled('div', {
   alignItems: 'center',
 
   strong: {
-    color: '$gray900',
+    color: '$gray800',
   },
 })

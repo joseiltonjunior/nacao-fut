@@ -95,7 +95,7 @@ export default function Auth() {
       <Header isAuth />
       <Container>
         <Main>
-          <h3>Hello, welcome to I 🧡 Football</h3>
+          <h3>Hello, welcome to I 💚 Football</h3>
           <form onSubmit={handleSubmit(handleStatusUser)}>
             <Input
               label="Enter your login key"

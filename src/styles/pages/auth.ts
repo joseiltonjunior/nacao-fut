@@ -15,7 +15,7 @@ export const Container = styled('div', {
     alignItems: 'center',
     justifyContent: 'center',
     background: '$gray800',
-    height: 'calc(100vh - 7.4rem)',
+    height: 'calc(100vh - 8.4rem)',
 
     img: {
       width: 'auto',
@@ -28,7 +28,7 @@ export const Container = styled('div', {
 
   '@media (max-width: 1000px)': {
     gridTemplateColumns: '1fr',
-    height: 'calc(100vh - 7.5rem)',
+    height: 'calc(100vh - 8.4rem)',
     padding: '1rem',
 
     main: {
@@ -56,7 +56,7 @@ export const Main = styled('main', {
   a: {
     textAlign: 'center',
     textDecoration: 'none',
-    color: '$orange500',
+    color: '$gray100',
     fontWeight: 'bold',
     fontSize: '$md',
 
@@ -68,7 +68,6 @@ export const Main = styled('main', {
   form: {
     marginTop: '2rem',
     maxWidth: 600,
-    // minWidth: 320,
     gap: '1rem',
     display: 'flex',
     flexDirection: 'column',

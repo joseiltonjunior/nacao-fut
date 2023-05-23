@@ -3,7 +3,7 @@ import { styled } from '@/styles'
 export const Container = styled('div', {
   width: '100%',
   height: '4rem',
-  background: '$orange500',
+  background: '$green500',
 
   display: 'flex',
   alignItems: 'center',
@@ -27,6 +27,6 @@ export const Container = styled('div', {
   },
 
   strong: {
-    color: '$gray800',
+    color: '$white',
   },
 })

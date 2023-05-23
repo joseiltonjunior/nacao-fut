@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import logo from '@/assets/soccer-player.png'
+import logo from '@/assets/icon-soccer-white.png'
 
 import { Container } from './styles'
 

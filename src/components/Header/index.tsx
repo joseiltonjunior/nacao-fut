@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Container } from './styles'
 import { GoSignOut } from 'react-icons/go'
-import logo from '@/assets/soccer-player.png'
+import logo from '@/assets/icon-soccer-white.png'
 import Image from 'next/image'
 
 interface headerProps {
@@ -13,7 +13,7 @@ export function Header({ isAuth }: headerProps) {
     <Container>
       <div>
         <Image src={logo} alt="logo" width={40} height={40} />
-        <strong>I Love Football - ILF</strong>
+        <strong>I Love Football</strong>
       </div>
 
       {!isAuth && (
