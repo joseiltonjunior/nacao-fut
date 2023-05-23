@@ -17,6 +17,7 @@ import { authProps } from '@/types/auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '@/storage/modules/user/action'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 
 const schema = z.object({
   clientSecretKey: z.string().min(25, { message: 'minimum of 25 characters' }),
@@ -119,6 +120,7 @@ export default function Auth() {
           <Image src={bkgd} alt="home background" width={500} height={500} />
         </aside>
       </Container>
+      <Footer />
     </>
   )
 }

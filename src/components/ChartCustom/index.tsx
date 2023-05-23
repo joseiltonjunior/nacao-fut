@@ -20,7 +20,21 @@ export function ChartCustom({ minute }: chartDataProps) {
     tooltip: {
       enabled: false,
     },
-    colors: ['#FFBA00'],
+    colors: ['#00b37e'],
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#e1e1e6',
+        },
+      },
+    },
+    xaxis: {
+      labels: {
+        style: {
+          colors: '#e1e1e6',
+        },
+      },
+    },
   }
 
   const series = [

@@ -23,7 +23,12 @@ export const Container = styled('div', {
   },
 
   a: {
-    color: '$gray800',
+    color: '$gray100',
+    transition: 'all 0.2s',
+
+    '&:hover': {
+      color: '$gray800',
+    },
   },
 
   strong: {

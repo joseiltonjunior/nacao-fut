@@ -94,7 +94,7 @@ export const ExpansiveButton = styled('button', {
   fontWeight: 'bold',
   cursor: 'pointer',
 
-  color: '$gray800',
+  color: '$white',
 })
 
 export const ButtonMoveTop = styled('button', {

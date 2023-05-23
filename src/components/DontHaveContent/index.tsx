@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Container } from './styles'
 import Link from 'next/link'
 
-import soccerPlayer from '@/assets/soccer-player.png'
+import soccerPlayer from '@/assets/icon-soccer-white.png'
 import badIcon from '@/assets/bad.png'
 
 interface dontHaveContentProps {

@@ -17,7 +17,7 @@ export function Header({ isAuth }: headerProps) {
       </div>
 
       {!isAuth && (
-        <Link href={'/'} title="SignOut">
+        <Link href={'/'} title="Logout">
           <GoSignOut size={20} />
         </Link>
       )}
