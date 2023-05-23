@@ -38,6 +38,7 @@ import { StatisticsLineups } from '@/components/StatisticsLineups'
 import { StatisticsGames } from '@/components/StatisticsGames'
 
 import { StatisticsTeam } from '@/components/StatisticsTeam'
+import { Footer } from '@/components/Footer'
 
 export default function Home({ countries, seasons, apiKey }: homeProps) {
   const [country, setCountry] = useState('')
@@ -52,10 +53,10 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
   const [teams, setTeams] = useState<selectProps[]>([
     { flag: '', name: '', value: 0 },
   ])
-  const [teamSeleted, setTeamSelected] = useState<teamResponseProps>()
+  const [teamSeleted, setTeamSelected] = useState<teamResponseProps | null>()
   const [teamStatistics, setTeamStatistics] =
     useState<teamStatisticsResponseProps | null>()
-  const [players, setPlayers] = useState<teamPlayerDataProps[]>()
+  const [players, setPlayers] = useState<teamPlayerDataProps[] | null>()
 
   const user = useSelector<reduxProps, userDataProps>((state) => state.user)
 
@@ -118,24 +119,6 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
       .finally(() => setIsLoadingTeams(false))
   }
 
-  async function handleGetTeam(teamId: number | string) {
-    await axios
-      .get(
-        `/api/fetchTeam?country=${country}&seasonId=${season}&leagueId=${league}&teamId=${teamId}&key=${apiKey}`,
-      )
-      .then((result) => {
-        const teamResponse = result.data.response[0]
-        setTeamSelected(teamResponse.team)
-      })
-      .catch(() => {
-        setIsLoading(false)
-        showToast('The team data could not be fetched.', {
-          type: 'error',
-          theme: 'colored',
-        })
-      })
-  }
-
   async function handleGetTeamPlayers(teamId: number | string) {
     await axios
       .get(
@@ -162,11 +145,33 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
           theme: 'colored',
         })
       })
+      .finally(() => setIsLoading(false))
+  }
+
+  async function handleGetTeam(teamId: number | string) {
+    await axios
+      .get(
+        `/api/fetchTeam?country=${country}&seasonId=${season}&leagueId=${league}&teamId=${teamId}&key=${apiKey}`,
+      )
+      .then((result) => {
+        const teamResponse = result.data.response[0]
+        setTeamSelected(teamResponse.team)
+        handleGetTeamPlayers(teamId)
+      })
+      .catch(() => {
+        setIsLoading(false)
+        showToast('The team data could not be fetched.', {
+          type: 'error',
+          theme: 'colored',
+        })
+      })
   }
 
   async function handleGetTeamStatistics(teamId: number | string) {
     setIsLoading(true)
     setTeamStatistics(null)
+    setTeamSelected(null)
+    setPlayers(null)
     await axios
       .get(
         `/api/fetchStatisticsTeam?seasonId=${season}&leagueId=${league}&teamId=${teamId}&key=${apiKey}`,
@@ -174,6 +179,8 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
       .then((result) => {
         const teamStatisticsResponse = result.data.response
         setTeamStatistics(teamStatisticsResponse)
+
+        handleGetTeam(teamId)
       })
       .catch(() =>
         showToast('The statistics could not be fetched.', {
@@ -181,7 +188,6 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
           theme: 'colored',
         }),
       )
-      .finally(() => setIsLoading(false))
   }
 
   if (isFallback) {
@@ -242,8 +248,6 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
             itens={teams}
             onAction={(item) => {
               handleGetTeamStatistics(item.value)
-              handleGetTeam(item.value)
-              handleGetTeamPlayers(item.value)
             }}
           />
         </Form>
@@ -270,6 +274,8 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
           )}
         </Main>
       </Container>
+
+      <Footer />
     </>
   )
 }

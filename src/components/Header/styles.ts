@@ -3,7 +3,7 @@ import { styled } from '@/styles'
 export const Container = styled('div', {
   width: '100%',
   height: '4rem',
-  background: '$orange500',
+  background: '$green500',
 
   display: 'flex',
   alignItems: 'center',
@@ -23,10 +23,15 @@ export const Container = styled('div', {
   },
 
   a: {
-    color: '$gray800',
+    color: '$gray100',
+    transition: 'all 0.2s',
+
+    '&:hover': {
+      color: '$gray800',
+    },
   },
 
   strong: {
-    color: '$gray800',
+    color: '$white',
   },
 })

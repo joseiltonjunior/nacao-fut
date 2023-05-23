@@ -55,7 +55,7 @@ export const ContentGrid = styled('div', {
     },
     borderBottom: {
       true: {
-        borderBottom: '1px solid $orange500',
+        borderBottom: '1px solid $green500',
       },
     },
   },

@@ -17,6 +17,7 @@ export function HomeSkeleton() {
           <Skeleton width={'100%'} height={'calc(100vh - 17rem)'} />
         </Main>
       </Container>
+      <Skeleton width={'100%'} height={'4rem'} />
     </>
   )
 }

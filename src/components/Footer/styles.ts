@@ -2,19 +2,23 @@ import { styled } from '@/styles'
 import Link from 'next/link'
 
 export const Container = styled('div', {
-  background: '$orange500',
+  background: '$green500',
   width: '100%',
 
   borderRadius: '10px 10px 0 0 ',
   position: 'relative',
-  padding: '0.5rem 1rem',
+  padding: '1rem',
   marginTop: 'auto',
 
   main: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    color: '$gray900',
+    color: '$gray800',
+
+    p: {
+      color: '$gray100',
+    },
   },
 })
 
@@ -51,7 +55,7 @@ export const MoreInfo = styled('div', {
       true: {
         height: 'auto',
         padding: '1rem 0',
-        borderBottom: '1px solid $gray900',
+        borderBottom: '1px solid $gray800',
         marginBottom: '1rem',
       },
     },
@@ -59,18 +63,17 @@ export const MoreInfo = styled('div', {
 })
 
 export const Title = styled('strong', {
-  color: '$gray900',
+  color: '$gray800',
   fontSize: '$md',
 })
 
 export const Info = styled('span', {
-  color: '$gray800',
-  fontSize: '14px',
+  color: '$gray100',
 })
 
 export const Redirect = styled(Link, {
   textDecoration: 'none',
-  color: '$gray800',
+  color: '$gray100',
   fontSize: '$sm',
   transition: 'all 0.2s',
 
@@ -84,22 +87,22 @@ export const ExpansiveButton = styled('button', {
 
   right: 'calc(50% - 4.5rem)',
   position: 'absolute',
-  background: '$orange500',
+  background: '$green500',
   border: 'none',
   borderRadius: '10px 10px 0 0',
   padding: '0.5rem 1rem',
   fontWeight: 'bold',
   cursor: 'pointer',
 
-  color: '$gray900',
+  color: '$white',
 })
 
 export const ButtonMoveTop = styled('button', {
   border: 'none',
-  background: '$gray900',
+  background: '$gray800',
   borderRadius: '8px',
   cursor: 'pointer',
   height: '35px',
   width: '35px',
-  color: '$orange500',
+  color: '$gray100',
 })

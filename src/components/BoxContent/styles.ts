@@ -7,9 +7,9 @@ export const Container = styled('div', {
   overflow: 'hidden',
 
   h4: {
-    color: '$gray800',
+    color: '$white',
 
-    background: '$orange500',
+    background: '$green500',
     padding: '0.5rem',
     borderRadius: '8px 8px 0 0',
   },
