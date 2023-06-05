@@ -66,10 +66,13 @@ export const Main = styled('main', {
   },
 
   div: {
-    // marginTop: '2rem',
     maxWidth: 500,
     gap: '1rem',
     display: 'flex',
     flexDirection: 'column',
+
+    button: {
+      marginTop: '2rem',
+    },
   },
 })
