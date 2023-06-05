@@ -5,7 +5,6 @@ export const Container = styled('div', {
   background: '$green500',
   width: '100%',
 
-  borderRadius: '10px 10px 0 0 ',
   position: 'relative',
   padding: '1rem',
   marginTop: 'auto',

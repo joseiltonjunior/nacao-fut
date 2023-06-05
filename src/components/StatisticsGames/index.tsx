@@ -10,19 +10,21 @@ interface statisticsGamesProps {
 export function StatisticsGames({ fixtures }: statisticsGamesProps) {
   return (
     <BoxContent>
-      <h4>Result games</h4>
+      <header>
+        <h4>Resultados dos jogos</h4>
+      </header>
       {fixtures && fixtures.played.total > 0 ? (
         <ContentBox>
           <ContentGrid flex borderBottom>
-            <strong>Wins</strong>
+            <strong>Ganhou</strong>
             <p>{fixtures.wins.total}</p>
           </ContentGrid>
           <ContentGrid flex borderBottom>
-            <strong>Draws</strong>
+            <strong>Empatou</strong>
             <p>{fixtures.draws.total}</p>
           </ContentGrid>
           <ContentGrid flex borderBottom>
-            <strong>Loses</strong>
+            <strong>Perdeu</strong>
             <p>{fixtures.loses.total}</p>
           </ContentGrid>
           <ContentGrid flex borderBottom>

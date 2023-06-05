@@ -1,10 +1,8 @@
 import axios from 'axios'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+
 import { useToast } from '@/hooks/useToast'
 import { Container, Main } from '@/styles/pages/auth'
-import { Input } from '@/components/Input'
+
 import { Button } from '@/components/Button'
 import { useState } from 'react'
 import Image from 'next/image'
@@ -12,26 +10,13 @@ import Image from 'next/image'
 import bkgd from '@/assets/home-bkgd-removebg-preview.png'
 
 import { useRouter } from 'next/router'
-import Link from 'next/link'
-import { authProps } from '@/types/auth'
+
 import { useDispatch } from 'react-redux'
 import { setUser } from '@/storage/modules/user/action'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 
-const schema = z.object({
-  clientSecretKey: z.string().min(25, { message: 'minimum of 25 characters' }),
-})
-
 export default function Auth() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<authProps>({
-    resolver: zodResolver(schema),
-  })
-
   const [isLoading, setIsLoading] = useState(false)
   const { showToast } = useToast()
   const dispatch = useDispatch()
@@ -63,10 +48,10 @@ export default function Auth() {
     setIsLoading(false)
   }
 
-  async function handleStatusUser({ clientSecretKey }: authProps) {
+  async function handleStatusUser() {
     setIsLoading(true)
     await axios
-      .get(`/api/status?key=${clientSecretKey}`)
+      .get(`/api/status?key=${process.env.NEXT_PUBLIC_KEY_API}`)
       .then((result) => {
         const { errors, response } = result.data
 
@@ -84,7 +69,7 @@ export default function Auth() {
         }
 
         dispatch(setUser({ user: response }))
-        router.push(`/home/${clientSecretKey}`)
+        router.push(`/home/${process.env.NEXT_PUBLIC_KEY_API}`)
       })
       .catch(() => {
         handleError('generic')
@@ -96,25 +81,20 @@ export default function Auth() {
       <Header isAuth />
       <Container>
         <Main>
-          <h3>Hello, welcome to I 💚 Football</h3>
-          <form onSubmit={handleSubmit(handleStatusUser)}>
-            <Input
-              label="Enter your login key"
-              name="clientSecretKey"
-              register={register}
-              error={errors.clientSecretKey}
-            />
-            <Button type="submit" isLoading={isLoading}>
-              Enter
-            </Button>
-
-            <Link
-              href={'https://dashboard.api-football.com/login'}
-              target="_blank"
+          <div>
+            <h3>Nação apaixonadaa ⚽</h3>
+            <span>
+              Mergulhe no universo do futebol com Nação Fut - seu guia essencial
+              para o mundo do futebol.
+            </span>
+            <Button
+              type="submit"
+              isLoading={isLoading}
+              onClick={() => handleStatusUser()}
             >
-              Create new account
-            </Link>
-          </form>
+              Acessar
+            </Button>
+          </div>
         </Main>
         <aside>
           <Image src={bkgd} alt="home background" width={500} height={500} />

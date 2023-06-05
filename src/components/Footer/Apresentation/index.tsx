@@ -10,8 +10,8 @@ export function Apresetation() {
       <Image src={logo} alt="" height={40} />
 
       <span style={{ marginTop: '1rem' }}>
-        To stay updated on the world of football and the statistics of your
-        favorite team.
+        Nação Fut é a sua dose diária de informações indispensáveis para todos
+        os amantes do futebol.
       </span>
     </Container>
   )

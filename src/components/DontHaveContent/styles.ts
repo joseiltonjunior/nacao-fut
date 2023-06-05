@@ -8,6 +8,10 @@ export const Container = styled('div', {
   textAlign: 'center',
   height: 'calc(100vh - 17rem)',
 
+  h3: {
+    maxWidth: 500,
+  },
+
   a: {
     color: '$orange500',
     marginTop: '0.5rem',

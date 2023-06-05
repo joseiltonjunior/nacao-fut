@@ -9,7 +9,6 @@ import {
   teamPlayerResponseProps,
   teamResponseProps,
   teamPlayerDataProps,
-  userDataProps,
 } from '@/types/home'
 
 import axios from 'axios'
@@ -28,8 +27,6 @@ import { HomeSkeleton } from '@/components/HomeSkeleton'
 import { StatisticsSkeleton } from '@/components/StatisticsSkeleton'
 
 import { useToast } from '@/hooks/useToast'
-import { useSelector } from 'react-redux'
-import { reduxProps } from '@/storage'
 
 import { DontHaveContent } from '@/components/DontHaveContent'
 import { GraphicGoalsStatistics } from '@/components/GraphicGoalsStatistics'
@@ -57,8 +54,6 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
   const [teamStatistics, setTeamStatistics] =
     useState<teamStatisticsResponseProps | null>()
   const [players, setPlayers] = useState<teamPlayerDataProps[] | null>()
-
-  const user = useSelector<reduxProps, userDataProps>((state) => state.user)
 
   const { isFallback } = useRouter()
   const { showToast } = useToast()
@@ -199,13 +194,10 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
       <Header />
 
       <Container>
-        <h3>
-          Hey {user.account.firstname}, track the statistics of your favorite
-          team.
-        </h3>
+        <h3>Filtro</h3>
         <Form>
           <Select
-            label="Select a country"
+            label="Escolha um País"
             disabled={countries.length === 0}
             itens={countries}
             onAction={(item) => {
@@ -217,7 +209,7 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
           />
 
           <Select
-            label="Select a season"
+            label="Agora uma Temporada"
             disabled={countries.length === 0}
             defaultValue={season}
             itens={seasons}
@@ -232,7 +224,7 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
           <Select
             isLoading={isLoadingLeagues}
             disabled={leagues.length <= 1}
-            label="Select a league"
+            label="A Liga também é importante"
             itens={leagues}
             onAction={(item) => {
               handleGetTeams(item.value)
@@ -244,7 +236,7 @@ export default function Home({ countries, seasons, apiKey }: homeProps) {
           <Select
             isLoading={isLoadingTeams}
             disabled={teams.length <= 1}
-            label="Select a team"
+            label="Por fim o Time"
             itens={teams}
             onAction={(item) => {
               handleGetTeamStatistics(item.value)

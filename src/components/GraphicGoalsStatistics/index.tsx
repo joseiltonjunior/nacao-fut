@@ -13,7 +13,10 @@ export function GraphicGoalsStatistics({ goals }: graphicGolsProps) {
   return (
     <GraphicContent>
       <BoxContent>
-        <h4>For goals</h4>
+        <header>
+          <h4>Gols feitos</h4>
+          <strong>{goals.for.total.total}</strong>
+        </header>
         {goals.for.minute['0-15'].total !== null ? (
           <div style={{ padding: '1rem 1rem 0 0' }}>
             <ChartCustom minute={goals.for.minute} />
@@ -23,7 +26,10 @@ export function GraphicGoalsStatistics({ goals }: graphicGolsProps) {
         )}
       </BoxContent>
       <BoxContent>
-        <h4>Agaisnt goals</h4>
+        <header>
+          <h4>Gols sofridos</h4>
+          <strong>{goals.against.total.total}</strong>
+        </header>
         {goals.against.minute['0-15'].total !== null ? (
           <div style={{ padding: '1rem 1rem 0 0' }}>
             <ChartCustom minute={goals.against.minute} />

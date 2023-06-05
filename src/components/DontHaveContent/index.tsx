@@ -30,8 +30,8 @@ export function DontHaveContent({ restrictions }: dontHaveContentProps) {
       )}
       <h3>
         {restrictions
-          ? 'Oops, it was not possible to fetch the data because your API key has some restrictions.'
-          : 'Conduct a search and stay informed about all the statistics of your team.'}
+          ? 'Oops, identificamos problemas com o servidos de dados. No momento não será possível buscar novas informações.'
+          : ' Descubra os destaques dos jogos, os números impressionantes e as histórias por trás dos craques.'}
       </h3>
       {restrictions && (
         <Link href={'https://dashboard.api-football.com/'} target="_blank">

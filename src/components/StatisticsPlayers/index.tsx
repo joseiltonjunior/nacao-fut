@@ -10,14 +10,16 @@ interface statisticsPlayersProps {
 export function StatisticsPlayers({ players }: statisticsPlayersProps) {
   return (
     <BoxContent>
-      <h4>Players</h4>
+      <header>
+        <h4>Jogadores</h4>
+      </header>
 
       {players && players.length > 0 ? (
         <ContentBox>
           <ContentGrid borderBottom grid>
-            <strong>Name</strong>
-            <strong>Age</strong>
-            <strong>Nationality</strong>
+            <strong>Nome</strong>
+            <strong>Idade</strong>
+            <strong>Oriundo</strong>
           </ContentGrid>
 
           {players.map((player) => (

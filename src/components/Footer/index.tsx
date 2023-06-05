@@ -32,7 +32,7 @@ export function Footer() {
       </MoreInfo>
       <main>
         <div>
-          <strong>{`ILF`} 2023</strong>
+          <strong>{`Nação Fut`} 2023</strong>
           <p>Todos os direitos reservados</p>
         </div>
 

@@ -3,7 +3,7 @@ import { styled } from '..'
 export const Container = styled('div', {
   width: '100%',
 
-  padding: '2rem',
+  padding: '2rem 1rem',
   maxWidth: 'calc(100vw - ((100vw - 1180px) / 2))',
   margin: '0 auto 2rem',
 })
@@ -50,7 +50,7 @@ export const ContentGrid = styled('div', {
     grid: {
       true: {
         display: 'grid',
-        gridTemplateColumns: '1fr 30px 100px',
+        gridTemplateColumns: '1fr 50px 80px',
       },
     },
     borderBottom: {
