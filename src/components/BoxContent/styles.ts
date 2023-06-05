@@ -6,10 +6,10 @@ export const Container = styled('div', {
   borderRadius: 8,
   overflow: 'hidden',
 
-  h4: {
-    color: '$white',
-
+  header: {
+    display: 'flex',
     background: '$green500',
+    justifyContent: 'space-between',
     padding: '0.5rem',
     borderRadius: '8px 8px 0 0',
   },

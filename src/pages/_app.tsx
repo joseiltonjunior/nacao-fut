@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta name="author" content="@dvlp.code" />
 
-        <title>I Love Football</title>
+        <title>Nação Fut</title>
       </Head>
 
       <Provider store={store}>

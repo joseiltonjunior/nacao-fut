@@ -10,7 +10,9 @@ interface statisticsLineups {
 export function StatisticsLineups({ lineups }: statisticsLineups) {
   return (
     <BoxContent>
-      <h4>Top used lineups</h4>
+      <header>
+        <h4>Escalações mais utilizadas</h4>
+      </header>
 
       {lineups && lineups.length > 0 ? (
         <ContentBox>

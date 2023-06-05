@@ -65,9 +65,9 @@ export const Main = styled('main', {
     },
   },
 
-  form: {
-    marginTop: '2rem',
-    maxWidth: 600,
+  div: {
+    // marginTop: '2rem',
+    maxWidth: 500,
     gap: '1rem',
     display: 'flex',
     flexDirection: 'column',

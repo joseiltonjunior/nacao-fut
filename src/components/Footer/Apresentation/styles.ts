@@ -14,6 +14,6 @@ export const Container = styled('div', {
   },
 
   '@media (min-width: 900px)': {
-    maxWidth: 300,
+    maxWidth: 400,
   },
 })

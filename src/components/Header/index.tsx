@@ -13,7 +13,7 @@ export function Header({ isAuth }: headerProps) {
     <Container>
       <div>
         <Image src={logo} alt="logo" width={40} height={40} />
-        <strong>I Love Football</strong>
+        <strong>Nação Fut</strong>
       </div>
 
       {!isAuth && (

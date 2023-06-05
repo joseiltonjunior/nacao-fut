@@ -50,7 +50,7 @@ export const ContentGrid = styled('div', {
     grid: {
       true: {
         display: 'grid',
-        gridTemplateColumns: '1fr 30px 100px',
+        gridTemplateColumns: '1fr 50px 80px',
       },
     },
     borderBottom: {
